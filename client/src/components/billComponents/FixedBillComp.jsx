@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { server, AuthContext } from "../../context/UserContext";
 
-function FixedBillPay() {
+function FixedBillPay({fixedexp}) {
     const [name, setName] = useState('');
     const [cost, setCost] = useState('');
     const [duedate,setDueDate]=useState('');
@@ -15,7 +15,7 @@ function FixedBillPay() {
     const fetchFixedBills = async () => {
         try {
   
-            const response = await axios.get(`/${server}/getfixedbill/:userId`);
+           const response = await axios.get(`${server}/getfixedbill/:userId`);
             setFixedBills(response.data);
         } catch (error) {
             console.error('Error fetching fixed bills:', error);
@@ -25,7 +25,7 @@ function FixedBillPay() {
     const handleAddFixedBill = async () => {
         try {
         //console.log(userId,name,cost,duedate);
-            await axios.post(`${server}/addfixedbill`, { userId,name, cost,duedate});
+            await axios.post(`${server}/addfixedbill`, { userId: userId,name: name, cost: cost,duedate:duedate});
             //fetchFixedBills();
         } catch (error) {
             console.error('Error adding fixed bill:', error);
@@ -75,7 +75,7 @@ function FixedBillPay() {
             <button onClick={handlePayAllButtonClick}>Pay All Fixed Bills</button>
             <h3>Fixed Bills</h3>
             <ul>
-                {fixedBills.map((bill) => (
+                {fixedexp.map((bill) => (
                     <li key={bill._id}>
                         {bill.name} - Cost: {bill.cost}
                     </li>

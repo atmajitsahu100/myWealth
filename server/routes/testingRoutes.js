@@ -13,7 +13,14 @@ const {sendOtp, signup, login, logout, } = require('../controller/Auth');
 
 
 // bill controller
-const {addFixedBill,fixedBillPay,getFixedBill} = require('../controller/BillController');
+const {addDailyExp, addFixedBill,fixedBillPay,getFixedBill} = require('../controller/BillController');
+
+
+
+// user controller
+const {getUserDetails } = require('../controller/UserController');
+
+
 
 
 
@@ -22,6 +29,16 @@ router.post('/sendOtp' , sendOtp);
 router.post('/signup' , signup);
 router.post('/login' , login);
 router.get('/logout' , logout);
+
+
+
+// user routing
+router.get('/getUserDetails/:userId', getUserDetails);
+
+
+
+// bill routing
+router.post('/addDailyExp', addDailyExp);
 router.get('/getfixedbill/:userId',getFixedBill);
 router.post('/payfixedbill',fixedBillPay);
 router.post('/addfixedbill',addFixedBill);

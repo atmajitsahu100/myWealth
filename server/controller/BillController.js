@@ -1,40 +1,88 @@
-const FixedBill = require("../models/FixedBillModel");
-const DailyExp = require("../models/DailyExpModel");
-const User = require("../models/UserModel");
+
+const User = require('../models/UserModel')
+const FixedBill = require('../models/FixedBillModel')
+const DailyExpense = require('../models/DailyExpModel')
+const Investment = require('../models/InvestmentModel') 
+
+exports.addDailyExp = async (req, res) => {
+    try {
+        const { name, cost, userId } = req.body;
+
+        // Create a new daily expense
+        const newDailyExpense = await DailyExpense.create({
+            name : name,
+            cost: cost,
+        });
+
+        // Update the user model with the created daily expense
+        await User.findByIdAndUpdate(userId, {
+            $push: { dailyExps: newDailyExpense._id },
+            $inc: { balance: -cost }
+        });
+
+        res.status(200).json({
+            success: true,
+            message: 'Daily expense added successfully.',
+            newDailyExpense
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            success: false,
+            message: 'Something went wrong while adding the daily expense.'
+        });
+    }
+}
+
 
 exports.addFixedBill = async(req,res)=>{
     try{
         const {userId,name,cost,duedate}=req.body;
         
         const newFixedBill = new FixedBill({
-            userId:userId,
             name: name,
             cost: cost,
         });
-        const savedFixedBill = await newFixedBill.save();
-
-        const user = await User.findById(userId);
-        user.fixedBillamt += cost;
-        await user.save();
-        res.status(201).json(savedFixedBill);
+        await newFixedBill.save();
+        await User.findByIdAndUpdate(userId, {
+            $push: { fixedBills: newFixedBill._id },
+            $inc: { fixedBillamt: cost }
+        });
+        res.status(200).json({ success: true,
+            message: 'fixed bill added successfully.',
+            newFixedBill
+    });
     }
     catch (error){
         console.error(error);
-        res.status(500).json({ message: "error while adding fixed bill" });
+        res.status(500).json({
+            success: false,
+            message: 'Something went wrong while adding the fixed bill.'
+        });
     }
 }
 
 exports.fixedBillPay=async(req,res)=>{
+    const { userId } = req.body;
     try{
-        const { userId } = req.body;
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
 
-        
-       await FixedBill.updateMany({ userId: userId }, { $inc: { lastPayment: 30 * 24 * 60 * 60 * 1000 } });
-       const user = await User.findById(userId);
-       user.balance-=user.fixedBillamt;
-    
-       await user.save();
-        res.status(200).json({ message: "Payment made successfully" });
+        // Retrieve all fixed pay bills associated with the user
+        const fixedBills = await FixedBill.find({ _id: { $in: user.fixedBills } });
+
+        // Update the last payment date of each fixed pay bill
+        const updatePromises = fixedBills.map(async (fixedBill) => {
+            fixedBill.lastPayment.setDate(fixedBill.lastPayment.getDate() + 30);
+            await fixedBill.save();
+        });
+
+        // Wait for all fixed pay bills to be updated
+        await Promise.all(updatePromises);
+
+        res.status(200).json({ message: 'All fixed pay bills updated successfully' });
 
     }
     catch (error){
