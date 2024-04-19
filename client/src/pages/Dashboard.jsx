@@ -4,10 +4,13 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { server, AuthContext } from "../context/UserContext";
 import FixedBillComp from "../components/billComponents/FixedBillComp";
+import DailyExpComp from "../components/billComponents/DailyExpComp";
 
 const Dashboard = () => {
   const navigate = useNavigate();
   const { isAuthenticated, setIsAuthenticated, userId, setUserId} = useContext(AuthContext);
+  const [dailyExp, setDailyExp] = useState([])
+  const [balance, setBalance] = useState()
 
   const fetchUserDetail = async() => {
     if(!isAuthenticated)  {
@@ -15,12 +18,10 @@ const Dashboard = () => {
       return;
     }
     try {
-      const response =  await axios.post(
-        `${server}/getUserDetail`,
-        { userId : userId },
-        { withCredentials: true }
-      );
-      console.log(response);
+      const response =  await axios.get( `${server}/getUserDetails/${userId}` );
+      setDailyExp(response.data.user.dailyExps);
+      setBalance(response.data.user.balance)
+      console.log(response.data.user)
       toast.success('user data fetched')
     } catch (error) {
       toast.error('something went wrong while user data fetching')
@@ -46,7 +47,7 @@ const Dashboard = () => {
   }
 
   useEffect(() => {
-    // fetchUserDetail();
+    fetchUserDetail();
   }, [navigate]);
 
   return (
@@ -55,8 +56,9 @@ const Dashboard = () => {
       { isAuthenticated && <p> isAuthenticated :  true </p>}
       { !isAuthenticated && <p> isAuthenticated :  false </p>}
       <p> userId : {userId} </p>
-      <h2> Balance : {} </h2>
+      <h2> Balance : {balance}</h2>
       <FixedBillComp />
+      <DailyExpComp dailyExp={dailyExp} setDailyExp={setDailyExp}  balance={balance} setBalance={setBalance}/>
     </div>
     
   )
