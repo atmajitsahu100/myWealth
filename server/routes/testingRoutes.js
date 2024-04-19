@@ -5,12 +5,15 @@ const router = express.Router();
 
 
 // importing required controler
+
+
 // auth controller
 const {sendOtp, signup, login, logout, } = require('../controller/Auth');
 
 
 
-
+// bill controller
+const {} = require('../controller/BillController');
 
 
 

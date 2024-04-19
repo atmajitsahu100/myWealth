@@ -1,7 +1,19 @@
 const mongoose = require('mongoose');
 
 const dailyExpenseSchema = new mongoose.Schema({
-    // Define properties of expense
+    name : {
+        type : String,
+        required : true,
+        trim : true,
+    },
+    cost : {
+        type : Number,
+        default : 0,
+    },
+    lastPayment : {
+        type: Date,
+        default: Date.now
+    }
 });
 
 module.exports = mongoose.model("DailyExpense", dailyExpenseSchema);

@@ -30,7 +30,7 @@ const Dashboard = () => {
   const addNewFixedBill = async(name, val) => {
     try {
       const response = await axios.post(
-        `${server}/getUserDetail`,
+        `${server}/addNewFixedBill`,
         { userId : userId, name : name, val : val },
         { withCredentials: true }
       )
@@ -46,7 +46,7 @@ const Dashboard = () => {
   }
 
   useEffect(() => {
-    fetchUserDetail();
+    // fetchUserDetail();
   }, [navigate]);
 
   return (
