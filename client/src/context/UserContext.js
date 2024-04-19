@@ -2,6 +2,7 @@ import React, { createContext, useEffect, useState } from 'react';
 import { jwtDecode } from "jwt-decode";
 import Cookies from "js-cookie";
 
+
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {

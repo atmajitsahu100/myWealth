@@ -38,6 +38,12 @@ const userSchema = new mongoose.Schema({
         required : true,
         default : 0,
     },
+    fixedBillamt:
+        {
+            type:Number,
+            default: 0,
+        }
+    ,
     fixedBills: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'FixedBill'

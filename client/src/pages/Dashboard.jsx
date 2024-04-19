@@ -27,23 +27,23 @@ const Dashboard = () => {
     }
   }
 
-  const addNewFixedBill = async(name, val) => {
-    try {
-      const response = await axios.post(
-        `${server}/addNewFixedBill`,
-        { userId : userId, name : name, val : val },
-        { withCredentials: true }
-      )
-      console.log(response);
-      toast.success('new bill added')
-    } catch (error) {
-      toast.error('new bill not added')
-    }
-  }
+  // const addNewFixedBill = async(name, val) => {
+  //   try {
+  //     const response = await axios.post(
+  //       `${server}/addNewFixedBill`,
+  //       { userId : userId, name : name, val : val },
+  //       { withCredentials: true }
+  //     )
+  //     console.log(response);
+  //     toast.success('new bill added')
+  //   } catch (error) {
+  //     toast.error('new bill not added')
+  //   }
+  // }
 
-  const payAllBill = async() => {
+  // const payAllBill = async() => {
     
-  }
+  // }
 
   useEffect(() => {
     // fetchUserDetail();
