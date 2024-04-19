@@ -1,7 +1,11 @@
 const mongoose = require('mongoose');
 
 const investmentSchema = new mongoose.Schema({
-    // Define properties of investment
+    name : {
+        type : String,
+        required : true,
+        trim : true,
+    },
 });
 
 module.exports = mongoose.model("Investment", investmentSchema);
