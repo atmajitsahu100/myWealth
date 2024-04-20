@@ -23,6 +23,7 @@ import Link from "@mui/material/Link";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import NotificationsIcon from "@mui/icons-material/Notifications";
+import { PieChart } from "@mui/x-charts/PieChart";
 import { mainListItems, secondaryListItems } from "./dashboard/listItems";
 import Chart from "./dashboard/Chart";
 import Deposits from "./dashboard/Deposits";
@@ -106,6 +107,9 @@ const Dashboard = () => {
   const [dailyExp, setDailyExp] = useState([])
   const [fixedBills,setFixedExp]= useState([])
   const [balance, setBalance] = useState()
+  const [lifetime, setLifetime] = useState({fixedBillTotal : 0, dailyExpTotal : 0, investmentTotal : 0, })
+  const [monthly, setMonthly] = useState({fixedBillTotal : 0, dailyExpTotal : 0, investmentTotal : 0, })
+  const [yearly, setYearly] = useState({fixedBillTotal : 0, dailyExpTotal : 0, investmentTotal : 0, })
 
   const fetchUserDetail = async () => {
     if (!isAuthenticated) {
@@ -117,7 +121,62 @@ const Dashboard = () => {
       setDailyExp(response.data.user.dailyExps);
       setBalance(response.data.user.balance)
       setFixedExp(response.data.user.fixedBills);
-      console.log(response.data);
+      console.log(response.data);    
+      const { fixedBills, dailyExps, investments } = response.data.user;
+      const fixedBillAmount = fixedBills.reduce((acc, bill) => acc + bill.cost, 0);
+      const dailyExpAmount = dailyExps.reduce((acc, exp) => acc + exp.cost, 0);
+      const investmentAmount = investments.reduce((acc, investment) => acc + investment.amount, 0);
+      setLifetime({fixedBillTotal : fixedBillAmount, dailyExpTotal : dailyExpAmount, investmentTotal : investmentAmount});
+
+      const currentMonth = new Date().getMonth() + 1;
+      const currentYear = new Date().getFullYear();
+      
+      const monthlyData = {
+        fixedBillTotal: fixedBills.reduce((acc, exp) => {
+          const expMonth = new Date(exp.createdAt).getMonth() + 1;
+          const expYear = new Date(exp.createdAt).getFullYear();
+          return expMonth === currentMonth && expYear === currentYear
+            ? acc + exp.cost
+            : acc;
+        }, 0),
+        dailyExpTotal: dailyExps.reduce((acc, bill) => {
+          const billMonth = new Date(bill.createdAt).getMonth() + 1;
+          const billYear = new Date(bill.createdAt).getFullYear();
+          return billMonth === currentMonth && billYear === currentYear
+            ? acc + bill.cost
+            : acc;
+        }, 0),
+        investmentTotal: investments.reduce((acc, investment) => {
+          const investmentMonth = new Date(investment.date).getMonth() + 1;
+          const investmentYear = new Date(investment.date).getFullYear();
+          return investmentMonth === currentMonth && investmentYear === currentYear
+            ? acc + investment.amount
+            : acc;
+        }, 0),
+      };
+      setMonthly(monthlyData);
+
+      const yearlyData = {
+        fixedBillTotal: fixedBills.reduce((acc, exp) => {
+          const expYear = new Date(exp.createdAt).getFullYear();
+          return expYear === currentYear
+            ? acc + exp.cost
+            : acc;
+        }, 0),
+        dailyExpTotal: dailyExp.reduce((acc, bill) => {
+          const billYear = new Date(bill.createdAt).getFullYear();
+          return billYear === currentYear
+            ? acc + bill.cost
+            : acc;
+        }, 0),
+        investmentTotal: investments.reduce((acc, investment) => {
+          const investmentYear = new Date(investment.date).getFullYear();
+          return investmentYear === currentYear
+            ? acc + investment.amount
+            : acc;
+        }, 0),
+      };
+      setYearly(yearlyData);
       toast.success('user data fetched')
     } catch (error) {
       toast.error("something went wrong while user data fetching");
@@ -146,9 +205,22 @@ const Dashboard = () => {
     fetchUserDetail();
   }, [navigate]);
 
+  const data = [
+    { id: 0, value: lifetime.fixedBillTotal, label: "Fixed Bills" },
+    { id: 1, value: lifetime.dailyExpTotal, label: "Daily Expenses" },
+    { id: 2, value: lifetime.investmentTotal, label: "Investments" },
+    { id: 3, value: balance, label: "Bank Balance" },
+  ];
+
+  const monthlyData = [
+    { id: 0, value: monthly.fixedBillTotal, label: "Fixed Bills" },
+    { id: 1, value: monthly.dailyExpTotal, label: "Daily Expenses" },
+    { id: 2, value: monthly.investmentTotal, label: "Investments" },
+    { id: 3, value: balance, label: "Bank Balance" },
+  ];
+
   return (
     <>
-   
       <Box sx={{ display: "flex" }}>
         <CssBaseline />
         <AppBar position="absolute" open={open}>
@@ -230,7 +302,22 @@ const Dashboard = () => {
                     height: 240,
                   }}
                 >
-                  <Chart />
+                  {/* <Chart /> */}
+                  <PieChart series={[ {
+                                data, highlightScope: { faded: "global", highlighted: "item", },
+                                faded: { innerRadius: 30, additionalRadius: -30, color: "gray", },
+                              }, ]}
+                  height={200}  />
+                  <PieChart series={[ {
+                                data : monthlyData, highlightScope: { faded: "global", highlighted: "item", },
+                                faded: { innerRadius: 30, additionalRadius: -30, color: "gray", },
+                              }, ]}
+                  height={200}  />
+                  <PieChart series={[ {
+                                data, highlightScope: { faded: "global", highlighted: "item", },
+                                faded: { innerRadius: 30, additionalRadius: -30, color: "gray", },
+                              }, ]}
+                  height={200}  />
                 </Paper>
               </Grid>
               {/* Recent Deposits */}

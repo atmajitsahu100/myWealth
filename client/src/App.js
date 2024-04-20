@@ -6,6 +6,7 @@ import LoginPage from "./pages/LoginPage";
 import { Toaster } from "react-hot-toast";
 import { AuthProvider } from "./context/UserContext";
 import Dashboard from "./pages/Dashboard";
+import ProfitChecker from "./components/stockComponets/ProfitChecker";
 import FixedBillComp from "./components/billComponents/FixedBillComp";
 
 
@@ -18,6 +19,7 @@ function App() {
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/profitCalculator" element={<ProfitChecker />} />
           <Route path="/fixedpay" element={<FixedBillComp/>} />
         </Routes>
       </Router>

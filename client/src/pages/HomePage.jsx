@@ -178,25 +178,20 @@ const HomePage = () => {
                   component="h1"
                   gutterBottom
                 >
-                  HiChat – where connections are effortless.
+                 myWealth
                 </Typography>
                 <Typography
                   variant="body1"
                   paragraph
                   style={{ margin: "30px 0", textAlign: "left" }}
                 >
-                  Stay in touch with loved ones, collaborate with colleagues,
-                  and share unforgettable moments with friends, all within a
-                  single, intuitive platform.
                 </Typography>
                 <Typography
                   variant="body1"
                   paragraph
                   style={{ margin: "0px 0 30px 0", textAlign: "left" }}
                 >
-                  Say goodbye to long waits for messages and hello to real-time
-                  communication. Hichat makes it easy to stay connected from
-                  anywhere, at any time.
+                
                 </Typography>
                 <div className={classes.ctaButtonContainer}>
                   <Button
@@ -234,25 +229,19 @@ const HomePage = () => {
             <Grid item xs={12} sm={6}>
               <div>
                 <Typography variant="h4" component="h2" gutterBottom>
-                  About HiChat
+           
                 </Typography>
                 <Typography variant="body1" paragraph>
-                  HiChat is a user-friendly chat application that allows you to
-                  stay connected with your loved ones.
+                  
                 </Typography>
                 <Typography variant="body1" paragraph>
-                  Whether it's chatting one-on-one or creating group
-                  conversations, HiChat makes communication seamless.
+               
                 </Typography>
                 <Typography variant="body1" paragraph>
-                  Whether you're engaged in one-on-one conversations or
-                  coordinating group discussions, HiChat ensures seamless
-                  communication.
+                 
                 </Typography>
                 <Typography variant="body1" paragraph>
-                  From intimate one-on-one chats to bustling group
-                  conversations, HiChat excels in making communication
-                  effortless.
+          
                 </Typography>
 
                 {/* <Button component={Link} to="/login" variant="contained" color="primary">
@@ -265,97 +254,7 @@ const HomePage = () => {
       </div>
 
       {/* Feature Section */}
-      <div className={classes.feature}>
-        <Container maxWidth="lg">
-          <Typography
-            variant="h4"
-            component="h2"
-            style={{ marginBottom: "20px" }}
-          >
-            Key Features
-          </Typography>
-          <Grid container spacing={5}>
-            <Grid item xs={12} sm={6} md={4}>
-              <Card className={classes.featureCard}>
-                <CardContent>
-                  <Typography variant="h5" component="h2">
-                    Real-time Messaging
-                  </Typography>
-                  <Typography variant="body2" component="span">
-                    Exchange messages instantly with friends and family,
-                    ensuring seamless communication.
-                  </Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-            <Grid item xs={12} sm={6} md={4}>
-              <Card className={classes.featureCard}>
-                <CardContent>
-                  <Typography variant="h5" component="h2">
-                    Media Sharing
-                  </Typography>
-                  <Typography variant="body2" component="p">
-                    Share photos, videos, and documents effortlessly within your
-                    conversations.
-                  </Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-            <Grid item xs={12} sm={6} md={4}>
-              <Card className={classes.featureCard}>
-                <CardContent>
-                  <Typography variant="h5" component="h2">
-                    Voice Calling
-                  </Typography>
-                  <Typography variant="body2" component="p">
-                    Make crystal-clear voice calls to your contacts directly
-                    from the app.
-                  </Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-            <Grid item xs={12} sm={6} md={4}>
-              <Card className={classes.featureCard}>
-                <CardContent>
-                  <Typography variant="h5" component="h2">
-                    Video Calling
-                  </Typography>
-                  <Typography variant="body2" component="p">
-                    Initiate video calls with high-definition video and audio
-                    quality for face-to-face conversations.
-                  </Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-            <Grid item xs={12} sm={6} md={4}>
-              <Card className={classes.featureCard}>
-                <CardContent>
-                  <Typography variant="h5" component="h2">
-                    Group Messaging
-                  </Typography>
-                  <Typography variant="body2" component="p">
-                    Create and manage group chats to stay connected with
-                    multiple contacts simultaneously.
-                  </Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-            <Grid item xs={12} sm={6} md={4}>
-              <Card className={classes.featureCard}>
-                <CardContent>
-                  <Typography variant="h5" component="h2">
-                    End-to-End Encryption
-                  </Typography>
-                  <Typography variant="body2" component="p">
-                    Ensure the security and privacy of your conversations with
-                    robust end-to-end encryption.
-                  </Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-          </Grid>
-        </Container>
-      </div>
+      
 
       {/* Footer Section */}
       <AppBar position="relative" className={classes.footer}>
