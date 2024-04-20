@@ -13,7 +13,6 @@ exports.getUserDetails = async (req, res) => {
                                 .populate('fixedBills')
                                 .populate('dailyExps')
                                 .populate('investments')
-                                .populate('fixedBills');
                                 
       if (!user) {
         return res.status(404).json({ 

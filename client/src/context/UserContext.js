@@ -7,8 +7,20 @@ const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
   
-  const [isAuthenticated, setIsAuthenticated] = useState();
-  const [userId, setUserId] = useState(null);
+  const [userId, setUserId] = useState(() => {
+    const token = Cookies.get("tokenf");
+    if(token) {
+      const decodedToken = jwtDecode(token);
+      const { id } = decodedToken;
+      return id;
+    }
+    return null;
+  });
+  
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    const token = Cookies.get("tokenf");
+    return !!token;
+  });
 
   useEffect(() => {
     const token = Cookies.get("tokenf");
@@ -22,10 +34,10 @@ const AuthProvider = ({ children }) => {
       setIsAuthenticated(false);
       setUserId(null);
     }
-  }, [isAuthenticated]);
+  }, [userId]); 
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated, userId, setUserId, server }}>
+    <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated, userId, setUserId }}>
       {children}
     </AuthContext.Provider>
   );

@@ -1,9 +1,27 @@
 import React, { useContext, useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { server, AuthContext } from "../context/UserContext";
+import CircularProgress from "@mui/material/CircularProgress";
 
+import Avatar from "@mui/material/Avatar";
+import IconButton from "@mui/material/IconButton";
+
+import Button from "@mui/material/Button";
+import CssBaseline from "@mui/material/CssBaseline";
+import TextField from "@mui/material/TextField";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
+import Link from "@mui/material/Link";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import InputAdornment from "@mui/material/InputAdornment";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 const SignupPage = () => {
   const navigate = useNavigate();
   const { isAuthenticated, setIsAuthenticated } = useContext(AuthContext);
@@ -81,74 +99,140 @@ const SignupPage = () => {
   };
 
   return (
-    <div style={{ textAlign: "center" }}>
-      <h1>Signup Page</h1>
-      {loading && <h1> Progress bar </h1>}
-      {!loading && !progress && (
-        <form onSubmit={handleSubmit}>
-          <input
-            type="text"
-            placeholder="First Name"
-            name="firstName"
-            value={signupData.firstName}
-            onChange={handleChange}
-            required
-          />
-          <br />
-          <input
-            type="text"
-            placeholder="Last Name"
-            name="lastName"
-            value={signupData.lastName}
-            onChange={handleChange}
-            required
-          />
-          <br />
-          <input
-            type="email"
-            placeholder="Email"
-            name="email"
-            value={signupData.email}
-            onChange={handleChange}
-            required
-          />
-          <br />
-          <input
-            type={showPassword ? "text" : "password"}
-            placeholder="Password"
-            name="password"
-            value={signupData.password}
-            onChange={handleChange}
-            required
-          />
-          <br />
-          <button type="submit">Sign Up</button>
-        </form>
-      )}
-      {!loading && progress && (
-        <form onSubmit={handleOtpSubmit}>
-          <input
-            type="number"
-            placeholder="Enter OTP"
-            name="otp"
-            value={otp}
-            onChange={handleOtpChange}
-            pattern="[0-9]{6}"
-            required
-          />
-          <br />
-          <button type="submit">Verify OTP</button>
-        </form>
-      )}
-      {!isAuthenticated && (
-        <h4 style={{ margin: "20px", fontSize: "16px", color: "black" }}>
-          Already Signed Up ? Login here
-        </h4>
-      )}
+    <>
+    <Container component="main" maxWidth="xs">
+     <Grid container justifyContent="center" alignItems="center" > 
+        <Grid item >
+        <Box          
+            sx={{
+              marginTop: 8,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}
+          >
+             <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+            <LockOutlinedIcon />
+          </Avatar>
+            <Typography variant="h5" component="h1" gutterBottom>
+              Signup
+            </Typography>
+            {loading && <CircularProgress size={100} />}
+            {!loading && !progress && (
+               <Box
+               component="form"
+               noValidate
+               onSubmit={handleSubmit}
+               sx={{ mt: 3 }}
+             >
+               <Grid container spacing={2}>
+                 <Grid item xs={12} sm={6}>
+                   <TextField
+                     autoComplete="given-name"
+                     name="firstName"
+                     required
+                     fullWidth
+                     id="firstName"
+                     label="First Name"
+                     value={signupData.firstName}
+                     onChange={handleChange}
+                     autoFocus
+                     size="small"
+                   />
+                 </Grid>
+                 <Grid item xs={12} sm={6}>
+                   <TextField
+                     required
+                     fullWidth
+                     id="lastName"
+                     label="Last Name"
+                     name="lastName"
+                     value={signupData.lastName}
+                     onChange={handleChange}
+                     autoComplete="family-name"
+                     size="small"
+                   />
+                 </Grid>
+                 <Grid item xs={12}>
+                   <TextField
+                     required
+                     fullWidth
+                     id="email"
+                     label="Email Address"
+                     name="email"
+                     autoComplete="email"
+                     value={signupData.email}
+                     onChange={handleChange}
+                     size="small"
+                   />
+                 </Grid>
+                 <Grid item xs={12}>
+                   <TextField
+                     type={showPassword ? "text" : "password"}
+                     required
+                     fullWidth
+                     name="password"
+                     label="Password"
+                     id="password"
+                     value={signupData.password}
+                     onChange={handleChange}
+                     autoComplete="new-password"
+                     size="small"
+                   />
+                 </Grid>
+               </Grid>
+               <Button
+                 type="submit"
+                 fullWidth
+                 variant="contained"
+                 sx={{ mt: 3, mb: 2 }}
+               >
+                 Sign Up
+               </Button>
+               <Grid container justifyContent="flex-end">
+                 <Grid item>
+                   <Link href="/login" variant="body2">
+                     Already have an account? Sign in
+                   </Link>
+                 </Grid>
+               </Grid>
+             </Box>
+            )}
+            {!loading && progress && (
+              <form onSubmit={handleOtpSubmit}>
+                <TextField
+                  label="Enter OTP"
+                  variant="outlined"
+                  type="number"
+                  name="otp"
+                  value={otp}
+                  onChange={handleOtpChange}
+                  fullWidth
+                  margin="normal"
+                  inputProps={{
+                    inputMode: "numeric",
+                    pattern: "[0-9]{6}",
+                  }}
+                />
+                <Button
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                  fullWidth
+                  style={{ marginTop: "10px" }}
+                >
+                  Verify OTP
+                </Button>
+              </form>
+            )}
+            {/* Login button */}
+          </Box>
+        </Grid>
+      </Grid>
+      </Container>
 
-      {/* Login button */}
-      <button onClick={() => navigate("/login")}>Log in here</button>
-    </div>
+  
+    </>
   );
 };
 

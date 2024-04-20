@@ -34,24 +34,20 @@ exports.addDailyExp = async (req, res) => {
     }
 }
 
-
 exports.addFixedBill = async(req,res)=>{
-    try{
-        const {userId,name,cost,duedate}=req.body;
-        
-        const newFixedBill = new FixedBill({
-            name: name,
-            cost: cost,
-        });
-        await newFixedBill.save();
+    try {
+        const { userId,name, cost } = req.body;
+        try{
+        const newFixedBill = await FixedBill.create({ name:name, cost:cost});
+        }catch(error){
+            console.log(error,"edksd");
+        }
         await User.findByIdAndUpdate(userId, {
             $push: { fixedBills: newFixedBill._id },
             $inc: { fixedBillamt: cost }
         });
-        res.status(200).json({ success: true,
-            message: 'fixed bill added successfully.',
-            newFixedBill
-    });
+       
+        res.status(200).json({ success: true, message: 'Fixed bill added successfully', newFixedBill });
     }
     catch (error){
         console.error(error);
@@ -61,7 +57,7 @@ exports.addFixedBill = async(req,res)=>{
         });
     }
 }
-
+      
 exports.fixedBillPay=async(req,res)=>{
     const { userId } = req.body;
     try{
