@@ -8,6 +8,8 @@ import { AuthProvider } from "./context/UserContext";
 import Dashboard from "./pages/Dashboard";
 import Stock from "./pages/Stock";
 import ProfitChecker from "./components/stockComponets/ProfitChecker";
+import Investment from "./components/investComponents/Investment";
+import FixedBillComp from "./components/billComponents/FixedBillComp";
 
 
 function App() {
@@ -22,6 +24,8 @@ function App() {
           <Route path="/stock" element={<Stock />} />
 
           <Route path="/profitCalculator" element={<ProfitChecker />} />
+          <Route path="/investment" element={<Investment />} />
+          <Route path="/fixedpay" element={<FixedBillComp/>} />
         </Routes>
       </Router>
       <Toaster />

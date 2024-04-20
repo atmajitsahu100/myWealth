@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const FixedBillSchema = new mongoose.Schema({
+const FixedBill = new mongoose.Schema({
     name : {
         type : String,
         required : true,
@@ -10,11 +10,10 @@ const FixedBillSchema = new mongoose.Schema({
         type : Number,
         default : 0,
     },
-    lastPayment: {
+    lastPayment : {
         type: Date,
         default: Date.now
     }
-
 });
 
-module.exports = mongoose.model("FixedBill", FixedBillSchema);
+module.exports = mongoose.model("FixedBill", FixedBill);

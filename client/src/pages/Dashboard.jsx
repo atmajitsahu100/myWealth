@@ -103,10 +103,10 @@ const Dashboard = () => {
     setOpen(!open);
   };
   const navigate = useNavigate();
-  const { isAuthenticated, setIsAuthenticated, userId, setUserId } =
-    useContext(AuthContext);
-  const [dailyExp, setDailyExp] = useState([]);
-  const [balance, setBalance] = useState();
+  const { isAuthenticated, setIsAuthenticated, userId, setUserId} = useContext(AuthContext);
+  const [dailyExp, setDailyExp] = useState([])
+  const [fixedBills,setFixedExp]= useState([])
+  const [balance, setBalance] = useState()
   const [lifetime, setLifetime] = useState({fixedBillTotal : 0, dailyExpTotal : 0, investmentTotal : 0, })
   const [monthly, setMonthly] = useState({fixedBillTotal : 0, dailyExpTotal : 0, investmentTotal : 0, })
   const [yearly, setYearly] = useState({fixedBillTotal : 0, dailyExpTotal : 0, investmentTotal : 0, })
@@ -119,8 +119,9 @@ const Dashboard = () => {
     try {
       const response = await axios.get(`${server}/getUserDetails/${userId}`);
       setDailyExp(response.data.user.dailyExps);
-      setBalance(response.data.user.balance);
-      console.log(response.data.user);    
+      setBalance(response.data.user.balance)
+      setFixedExp(response.data.user.fixedBills);
+      console.log(response.data);    
       const { fixedBills, dailyExps, investments } = response.data.user;
       const fixedBillAmount = fixedBills.reduce((acc, bill) => acc + bill.cost, 0);
       const dailyExpAmount = dailyExps.reduce((acc, exp) => acc + exp.cost, 0);
@@ -176,27 +177,29 @@ const Dashboard = () => {
         }, 0),
       };
       setYearly(yearlyData);
-      toast.success("user data fetched");
+      toast.success('user data fetched')
     } catch (error) {
       toast.error("something went wrong while user data fetching");
     }
   };
 
-  const addNewFixedBill = async (name, val) => {
-    try {
-      const response = await axios.post(
-        `${server}/addNewFixedBill`,
-        { userId: userId, name: name, val: val },
-        { withCredentials: true }
-      );
-      console.log(response);
-      toast.success("new bill added");
-    } catch (error) {
-      toast.error("new bill not added");
-    }
-  };
+  // const addNewFixedBill = async(name, val) => {
+  //   try {
+  //     const response = await axios.post(
+  //       `${server}/addNewFixedBill`,
+  //       { userId : userId, name : name, val : val },
+  //       { withCredentials: true }
+  //     )
+  //     console.log(response);
+  //     toast.success('new bill added')
+  //   } catch (error) {
+  //     toast.error('new bill not added')
+  //   }
+  // }
 
-  const payAllBill = async () => {};
+  // const payAllBill = async() => {
+    
+  // }
 
   useEffect(() => {
     fetchUserDetail();
@@ -349,7 +352,7 @@ const Dashboard = () => {
         </Box>
       </Box>
     </>
-  );
-};
+  )
+}
 
 export default Dashboard;

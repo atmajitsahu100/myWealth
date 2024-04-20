@@ -12,7 +12,7 @@ exports.getUserDetails = async (req, res) => {
                                 .select("-password")
                                 .populate('fixedBills')
                                 .populate('dailyExps')
-                                .populate('investments');
+                                .populate('investments')
                                 
       if (!user) {
         return res.status(404).json({ 
