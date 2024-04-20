@@ -6,6 +6,7 @@ import LoginPage from "./pages/LoginPage";
 import { Toaster } from "react-hot-toast";
 import { AuthProvider } from "./context/UserContext";
 import Dashboard from "./pages/Dashboard";
+import Stock from "./pages/Stock";
 
 
 function App() {
@@ -17,6 +18,8 @@ function App() {
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/stock" element={<Stock />} />
+
         </Routes>
       </Router>
       <Toaster />
