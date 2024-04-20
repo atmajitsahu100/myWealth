@@ -3,6 +3,8 @@
 Welcome to myWealth, your personal finance companion designed to help you achieve your financial goals with ease and confidence.
 
 
+## Wireframe
+![balsamiq](https://github.com/atmajitsahu100/myWealth/assets/27480542/4fd42d18-8254-40da-9508-1e6f4828d536)
 
 
 # Installation
