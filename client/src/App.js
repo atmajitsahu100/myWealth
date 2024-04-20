@@ -7,6 +7,7 @@ import { Toaster } from "react-hot-toast";
 import { AuthProvider } from "./context/UserContext";
 import Dashboard from "./pages/Dashboard";
 import Stock from "./pages/Stock";
+import ProfitChecker from "./components/stockComponets/ProfitChecker";
 
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/stock" element={<Stock />} />
 
+          <Route path="/profitCalculator" element={<ProfitChecker />} />
         </Routes>
       </Router>
       <Toaster />
