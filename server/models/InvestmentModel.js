@@ -6,6 +6,10 @@ const investmentSchema = new mongoose.Schema({
         required : true,
         trim : true,
     },
+    type : {
+        type: String,
+        required : true,
+    }
 });
 
 module.exports = mongoose.model("Investment", investmentSchema);
